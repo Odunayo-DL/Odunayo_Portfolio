@@ -297,6 +297,7 @@ ORDER BY Delivery_Date DESC;
 
 -- 2. Let's check if they were flagged according as late - OnTime: 'False'
 SELECT
+	TimeWindow,
     COUNT(*) AS Total_Delivered_After_Promised_Date,
     SUM(CASE
         WHEN OnTime = 1 THEN 1
@@ -315,7 +316,8 @@ SELECT
 
 FROM fact_delivery_orders
 WHERE DeliveryStatus = 'Delivered'
-    AND Delivery_Date > Promised_Date;
+    AND Delivery_Date > Promised_Date
+	GROUP BY TimeWindow;
 -- Nice!...all were correct
 
 -- Let's check number of delivery...numnber of delivered order--
